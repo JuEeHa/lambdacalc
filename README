@@ -1,0 +1,9 @@
+A simple interpreter for (a version of) lambda calculus.
+
+Uses following syntax:
+`xy	apply x to y
+\x	lambda with expression x
+[0-9]+	a reference to a lambda, 0-indexed (e.g. \\0 = \xy.y)
+foo	a symbol
+
+Separate references / symbols from each other with whitespace.
