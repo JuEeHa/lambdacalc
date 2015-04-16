@@ -148,15 +148,14 @@ rewrite(obj *expression, obj *argument, unsigned int level) {
 
 obj*
 doapplication(obj *function, obj *argument) {
-	obj *retvalue;
-	
 	if(function->type == LAMBDA) {
-		retvalue = rewrite(function->expression, argument, 0);
-		return retvalue;
+               return rewrite(function->expression, argument, 0);
 	} else if(function->type == APPLICATION) {
+		obj *inner = doapplication(function->function, function->argument);
+		if(inner == NULL) /* Nothing was changed, thus we too return NULL */
+			return NULL;
 		argument->refcount++;
-		retvalue = apply(doapplication(function->function, function->argument), argument);
-		return retvalue;
+		return apply(inner, argument);
 	} else {
 		return NULL;
 	}
